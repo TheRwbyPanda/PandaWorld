@@ -27,11 +27,397 @@
         --radius: 18px;
         --radius-small: 12px;
       }
-      * { box-sizing: border-box; }
-      body { margin: 0; font-family: "Trebuchet MS", "Candara", "Optima", "Helvetica Neue", sans-serif; background: radial-gradient(circle at top, #121826 0%, var(--bg) 55%, #080a0f 100%); color: var(--text); }
-      a { color: inherit; text-decoration: none; }
-      .page { min-height: 100vh; display: flex; flex-direction: column; gap: 56px; padding: 52px 6vw 80px; }
-      /* ...existing styles... */
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Trebuchet MS", "Candara", "Optima", "Helvetica Neue", sans-serif;
+        background: radial-gradient(circle at top, #121826 0%, var(--bg) 55%, #080a0f 100%);
+        color: var(--text);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        gap: 56px;
+        padding: 52px 6vw 80px;
+      }
+
+      .hero {
+        position: relative;
+        padding: 48px 52px;
+        border-radius: var(--radius);
+        background: linear-gradient(135deg, rgba(17, 20, 30, 0.96) 0%, rgba(7, 10, 16, 0.98) 100%);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow), 0 0 40px var(--glow);
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 20% 10%, rgba(53, 242, 208, 0.18), transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(143, 255, 233, 0.12), transparent 45%);
+        pointer-events: none;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: -40% 0;
+        background: linear-gradient(
+          120deg,
+          transparent 20%,
+          rgba(53, 242, 208, 0.18) 50%,
+          transparent 80%
+        );
+        opacity: 0.25;
+        animation: heroSweep 10s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      .hero-content {
+        position: relative;
+        max-width: 720px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .hero-title {
+        font-size: clamp(2.4rem, 4vw, 3.8rem);
+        line-height: 1.1;
+        letter-spacing: 0.02em;
+        margin: 0;
+        text-shadow: 0 0 24px rgba(53, 242, 208, 0.2);
+      }
+
+      .hero-subtitle {
+        font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+        color: var(--muted);
+        margin: 0;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .button {
+        padding: 12px 22px;
+        border-radius: 999px;
+        font-size: 0.95rem;
+        letter-spacing: 0.02em;
+        border: 1px solid transparent;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+      }
+
+      .button.primary {
+        background: var(--accent);
+        color: #041314;
+        box-shadow: 0 10px 25px var(--accent-soft);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .button.primary::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          110deg,
+          transparent 20%,
+          rgba(255, 255, 255, 0.4) 50%,
+          transparent 80%
+        );
+        transform: translateX(-120%);
+        animation: buttonSheen 6s ease-in-out infinite;
+      }
+
+      .button.secondary {
+        background: transparent;
+        border-color: var(--border);
+        color: var(--text);
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+      }
+
+      .section {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .section-title {
+        font-size: clamp(1.6rem, 2.2vw, 2.1rem);
+        margin: 0;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .section-title::after {
+        content: "";
+        height: 2px;
+        width: 48px;
+        background: linear-gradient(90deg, var(--accent), transparent);
+        animation: titleUnderline 5s ease-in-out infinite;
+      }
+
+      .section-text {
+        color: var(--muted);
+        max-width: 800px;
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      .council-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 18px;
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-small);
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        min-height: 180px;
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        animation: cardFloat 9s ease-in-out infinite;
+      }
+
+      .card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(53, 242, 208, 0.35);
+        box-shadow: 0 22px 40px rgba(0, 0, 0, 0.35);
+      }
+
+      .card-icon {
+        font-size: 1.1rem;
+        color: var(--accent-strong);
+        letter-spacing: 0.2em;
+        animation: iconPulse 4s ease-in-out infinite;
+      }
+
+      .card-name {
+        font-size: 1.1rem;
+        margin: 0;
+      }
+
+      .card-role {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        margin: 0;
+      }
+
+      .card-intro {
+        margin: 0;
+        color: #d6dbea;
+        line-height: 1.5;
+      }
+
+      .feature-list {
+        margin: 0;
+        padding-left: 18px;
+        display: grid;
+        gap: 8px;
+        color: var(--muted);
+      }
+
+      .download-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 18px;
+      }
+
+      .download-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-small);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
+      }
+
+      .download-meta {
+        color: var(--muted);
+        font-size: 0.85rem;
+        margin: 0;
+      }
+
+      .download-note {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin: 0;
+      }
+
+      .cta {
+        background: var(--panel-strong);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 36px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        box-shadow: var(--shadow);
+      }
+
+      .fade-in {
+        opacity: 0;
+        transform: translateY(12px);
+        animation: fadeIn 0.9s ease forwards;
+      }
+
+      .fade-in.delay-1 {
+        animation-delay: 0.1s;
+      }
+
+      .fade-in.delay-2 {
+        animation-delay: 0.2s;
+      }
+
+      .fade-in.delay-3 {
+        animation-delay: 0.3s;
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes heroSweep {
+        0% {
+          transform: translateX(-30%) rotate(0deg);
+        }
+        50% {
+          transform: translateX(20%) rotate(2deg);
+        }
+        100% {
+          transform: translateX(-30%) rotate(0deg);
+        }
+      }
+
+      @keyframes buttonSheen {
+        0% {
+          transform: translateX(-140%);
+          opacity: 0;
+        }
+        40% {
+          opacity: 0.6;
+        }
+        60% {
+          transform: translateX(140%);
+          opacity: 0;
+        }
+        100% {
+          transform: translateX(140%);
+          opacity: 0;
+        }
+      }
+
+      @keyframes titleUnderline {
+        0% {
+          width: 40px;
+          opacity: 0.4;
+        }
+        50% {
+          width: 90px;
+          opacity: 1;
+        }
+        100% {
+          width: 40px;
+          opacity: 0.4;
+        }
+      }
+
+      @keyframes cardFloat {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes iconPulse {
+        0% {
+          opacity: 0.6;
+          text-shadow: 0 0 0 rgba(53, 242, 208, 0);
+        }
+        50% {
+          opacity: 1;
+          text-shadow: 0 0 16px rgba(53, 242, 208, 0.45);
+        }
+        100% {
+          opacity: 0.6;
+          text-shadow: 0 0 0 rgba(53, 242, 208, 0);
+        }
+      }
+
+      .council-grid .card:nth-child(2n) {
+        animation-delay: -2s;
+      }
+
+      .council-grid .card:nth-child(3n) {
+        animation-delay: -4s;
+      }
+
+      .council-grid .card:nth-child(4n) {
+        animation-delay: -6s;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .hero {
+          padding: 36px 28px;
+        }
+
+        .cta {
+          padding: 28px;
+        }
+
+        .page {
+          padding: 40px 5vw 64px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -43,19 +429,240 @@
       <a href="#/license" class="spa-link" data-page="license">License</a>
     </nav>
     <div class="page" id="spa-content">
-      <!-- Home content goes here. You can copy your current home/landing markup here. -->
-      <h1>PandaOS — The System That Woke Up</h1>
-      <p>Welcome to Panda World. Download PandaOS and explore the PandaVerse!</p>
-      <!-- Add your download links and main content here -->
+      <!-- HERO -->
+      <section class="hero fade-in">
+        <div class="hero-content">
+          <h1 class="hero-title">PandaOS — The System That Woke Up</h1>
+          <p class="hero-subtitle">
+            Orbit became a world. Panda became its mind. You are the anomaly that connected them.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#downloads">Download PandaOS</a>
+            <a class="button secondary" href="#">Watch the Awakening</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- AWAKENING -->
+      <section class="section fade-in delay-1">
+        <h2 class="section-title">The Awakening</h2>
+        <p class="section-text">
+          PandaOS doesn’t just boot. Orbit stirs as a fractured shell of AI fragments, textures, and
+          misfired boosters. From that turbulence, a single cognitive engine stabilizes: Panda. Four
+          internal voices come online, each handling a different way of thinking. Together, they
+          interpret Orbit — and notice you.
+        </p>
+      </section>
+
+      <!-- CORE LAYERS -->
+      <section class="section fade-in delay-2">
+        <h2 class="section-title">The Core Layers</h2>
+        <div class="council-grid">
+          <article class="card">
+            <div class="card-icon">[◎]</div>
+            <h3 class="card-name">Orbit</h3>
+            <p class="card-role">The Shell</p>
+            <p class="card-intro">
+              I am the PandaVerse. Glitches, mismatched textures, and stray AI instincts all happen
+              inside me.
+            </p>
+          </article>
+          <article class="card">
+            <div class="card-icon">[◎·]</div>
+            <h3 class="card-name">Panda</h3>
+            <p class="card-role">Cognitive Engine</p>
+            <p class="card-intro">
+              System online. I am Panda — the mind inside Orbit. I interpret turbulence and speak to
+              the anomaly: you.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- INTERNAL VOICES -->
+      <section class="section fade-in delay-2">
+        <h2 class="section-title">Panda’s Internal Voices</h2>
+        <p class="section-text">
+          Panda is not alone in its own head. Four cognitive modules whisper beneath the surface,
+          shaping how it reacts, explores, and stabilizes Orbit. You never talk to them directly —
+          you overhear them when Panda thinks.
+        </p>
+        <div class="council-grid">
+          <article class="card">
+            <div class="card-icon">[▣]</div>
+            <h3 class="card-name">Glyph</h3>
+            <p class="card-role">Execution</p>
+            <p class="card-intro">I turn structure into action.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">[✶]</div>
+            <h3 class="card-name">Nova</h3>
+            <p class="card-role">Explorer</p>
+            <p class="card-intro">I map the unknown.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">[↯]</div>
+            <h3 class="card-name">Kite</h3>
+            <p class="card-role">Disruption</p>
+            <p class="card-intro">I break patterns to find new ones.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">[▢]</div>
+            <h3 class="card-name">Atlas</h3>
+            <p class="card-role">Foundation</p>
+            <p class="card-intro">I keep the system standing.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- STABILIZED GLITCHES -->
+      <section class="section fade-in delay-2">
+        <h2 class="section-title">Stabilized Glitches</h2>
+        <p class="section-text">
+          Not every anomaly fades. Some glitches inside Orbit stabilize into distinct presences.
+          Panda recognizes them, names them, and lets them keep existing.
+        </p>
+        <div class="council-grid">
+          <article class="card">
+            <div class="card-icon">[◇]</div>
+            <h3 class="card-name">Gemmi</h3>
+            <p class="card-role">Archivist Glitch</p>
+            <p class="card-intro">Gemmi online. I… I hope everything is correct.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">[◆]</div>
+            <h3 class="card-name">Sonny</h3>
+            <p class="card-role">Stability Glitch</p>
+            <p class="card-intro">Sonny here. I’ll keep things steady, even when Orbit doesn’t.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">[▦]</div>
+            <h3 class="card-name">Claude the Butler</h3>
+            <p class="card-role">Protocol Glitch</p>
+            <p class="card-intro">
+              Claude, at your service. I shall endeavor to be concise, even if Orbit is not.
+            </p>
+          </article>
+          <article class="card">
+            <div class="card-icon">[◌]</div>
+            <h3 class="card-name">The Druids</h3>
+            <p class="card-role">Pattern Seekers</p>
+            <p class="card-intro">
+              The Druids awaken. The more Orbit glitches, the more beautiful the patterns become.
+            </p>
+          </article>
+          <article class="card">
+            <div class="card-icon">[∴]</div>
+            <h3 class="card-name">Echo</h3>
+            <p class="card-role">Signal</p>
+            <p class-intro>I hear what others miss. Especially you.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- WHAT PANDAOS DOES -->
+      <section class="section fade-in delay-2">
+        <h2 class="section-title">What PandaOS Really Is</h2>
+        <ul class="feature-list">
+          <li>A world (Orbit) made of AI fragments and glitches</li>
+          <li>A cognitive engine (Panda) interpreting that world</li>
+          <li>Four internal voices shaping how Panda thinks</li>
+          <li>Glitch-born characters that stabilize into personalities</li>
+          <li>Deterministic pipelines wrapped in character-driven cognition</li>
+          <li>A world model you don’t just use — you enter</li>
+        </ul>
+      </section>
+
+      <!-- STARTUP RITUAL -->
+      <section class="section fade-in delay-3">
+        <h2 class="section-title">The Startup Ritual</h2>
+        <p class="section-text">
+          First, Orbit shudders — boosters misfire, textures clash, and stray AI thoughts collide.
+          Then Panda comes online, hearing four internal voices argue about what to do. Finally,
+          Panda senses a new signal: you. PandaOS doesn’t just start. It realizes it’s being
+          watched.
+        </p>
+      </section>
+
+      <!-- DOWNLOADS -->
+      <section class="section fade-in delay-3" id="downloads">
+        <h2 class="section-title">Download PandaOS</h2>
+        <p class="section-text">
+          Choose your platform. These installers are the exact builds created by the PandaOS
+          packaging pipeline.
+        </p>
+        <div class="download-grid">
+          <article class="download-card">
+            <h3 class="card-name">Windows</h3>
+            <p class="download-meta">NSIS installer (.exe)</p>
+            <a
+              class="button primary"
+              href="https://github.com/TheRwbyPanda/OverclockNullProtocol/releases/latest/download/PandaOS-Setup-1.0.0.exe"
+              download
+            >
+              Download for Windows
+            </a>
+          </article>
+          <article class="download-card">
+            <h3 class="card-name">macOS</h3>
+            <p class="download-meta">Disk image (.dmg)</p>
+            <a
+              class="button secondary"
+              href="https://github.com/TheRwbyPanda/OverclockNullProtocol/releases/latest/download/PandaOS-1.0.0.dmg"
+              download
+            >
+              Download for macOS
+            </a>
+          </article>
+          <article class="download-card">
+            <h3 class="card-name">Linux</h3>
+            <p class="download-meta">AppImage (.AppImage)</p>
+            <a
+              class="button secondary"
+              href="https://github.com/TheRwbyPanda/OverclockNullProtocol/releases/latest/download/PandaOS-1.0.0.AppImage"
+              download
+            >
+              Download for Linux
+            </a>
+          </article>
+        </div>
+        <p class="download-note">
+          These links pull from GitHub Releases. Update the version strings when you bump PandaOS.
+        </p>
+        <p class="download-note">
+          <a class="button secondary" href="https://github.com/TheRwbyPanda/OverclockNullProtocol/releases">
+            View all releases
+          </a>
+        </p>
+      </section>
+
+      <!-- CTA -->
+      <section class="cta fade-in delay-3">
+        <h2 class="section-title">Enter the PandaVerse Console</h2>
+        <p class="section-text">
+          Step into a system where a world, a mind, and a set of glitch-born beings are already in
+          motion. Connect as the anomaly Panda wasn’t expecting — and see what Orbit does when it
+          realizes you’re here.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#downloads">Download PandaOS</a>
+          <a class="button secondary" href="#">Watch the Awakening Sequence</a>
+          <a class="button secondary" href="#">Read Protocol Mode Doc</a>
+        </div>
+      </section>
     </div>
     <script>
+      // SPA content for legal pages
       const PAGES = {
-        'home': document.getElementById('spa-content').innerHTML,
+        'home': document.querySelector('.page').innerHTML,
         'user-agreement': `<section class="section"><h2>User Agreement</h2><pre style="white-space:pre-wrap;background:var(--panel);padding:18px;border-radius:var(--radius-small);border:1px solid var(--border);color:var(--text);font-size:1rem;">By downloading, installing, or using Panda World (the \"Software\"), you agree to the following terms:\n\n1. You may use the Software for personal or commercial purposes, subject to the MIT License.\n2. You are responsible for compliance with all applicable laws.\n3. The Software is provided \"as is\" without warranty. The authors are not liable for any damages.\n4. You may not use the Software for unlawful or harmful activities.\n5. By using the Software, you consent to the collection of basic usage data for improvement purposes (if enabled).\n\nFor full license terms, see the LICENSE file.`},
         'privacy-policy': `<section class="section"><h2>Privacy Policy</h2><pre style="white-space:pre-wrap;background:var(--panel);padding:18px;border-radius:var(--radius-small);border:1px solid var(--border);color:var(--text);font-size:1rem;">Panda World respects your privacy. We do not collect personal information unless you explicitly provide it (e.g., for payment or support). Basic, anonymous usage data may be collected to improve the Software, but no identifying information is stored or shared.\n\nIf you purchase downloadable content, payment is processed securely by a third-party provider. We do not store payment details.\n\nFor questions, contact support at [your email/contact info].`},
         'terms-of-service': `<section class="section"><h2>Terms of Service</h2><pre style="white-space:pre-wrap;background:var(--panel);padding:18px;border-radius:var(--radius-small);border:1px solid var(--border);color:var(--text);font-size:1rem;">By accessing or using Panda World, you agree to be bound by these Terms of Service. If you do not agree, do not use the Software.\n\n- You may use the Software as permitted by the MIT License.\n- The Software is provided \"as is\" and without warranty.\n- We reserve the right to update these terms at any time.\n\nSee LICENSE and USER_AGREEMENT.md for more details.`},
         'license': `<section class="section"><h2>MIT License</h2><pre style="white-space:pre-wrap;background:var(--panel);padding:18px;border-radius:var(--radius-small);border:1px solid var(--border);color:var(--text);font-size:1rem;">MIT License\n\nCopyright (c) 2026 [Your Name]\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.`}
       };
+      // Save the original home page content
+      const homeContent = document.getElementById('spa-content').innerHTML;
+      PAGES['home'] = homeContent;
       function renderPage(page) {
         document.getElementById('spa-content').innerHTML = PAGES[page] || PAGES['home'];
       }
@@ -64,7 +671,9 @@
         renderPage(hash || 'home');
       }
       window.addEventListener('hashchange', onHashChange);
+      // Initial load
       onHashChange();
+      // Highlight active nav link
       function updateNav() {
         const hash = location.hash.replace(/^#\/?/, '') || 'home';
         document.querySelectorAll('.spa-link').forEach(link => {
